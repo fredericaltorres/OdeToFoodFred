@@ -17,11 +17,10 @@ namespace OdeToFood
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMvc();
-
             services.AddSingleton<IGreeter, Greeter>(); // once instance for the all app
             //services.AddTransient // allocated each time requested
             //services.AddScoped // For every http request
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,9 +43,11 @@ namespace OdeToFood
 
             // Use static file located in folde wwww and set up default page
             //app.UseDefaultFiles(); // Already to index.html, must be set before UseStaticFiles
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
             // Same as above
-            app.UseFileServer();
+            //app.UseFileServer();
+
+            app.UseMvcWithDefaultRoute();
                 
             // For every request
             app.Run(async (context) => {
