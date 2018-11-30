@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -47,7 +48,8 @@ namespace OdeToFood
             // Same as above
             //app.UseFileServer();
 
-            app.UseMvcWithDefaultRoute();
+            // app.UseMvcWithDefaultRoute(); << default route configured
+            app.UseMvc(ConfigureRoutes);
                 
             // For every request
             app.Run(async (context) => {
@@ -56,8 +58,18 @@ namespace OdeToFood
                 // dotnet.exe run Greeting="Hello from command line"
                 var greeting = configuration["Greeting"];
                 greeting = greeter.GetMessageOfTheDay();
-                await context.Response.WriteAsync($"Message:{greeting}  EnvironmentName:{env.EnvironmentName}");
+                context.Response.ContentType = "text/plain";
+                await context.Response.WriteAsync($"Not Found - Message:{greeting} EnvironmentName:{env.EnvironmentName}");
             });
+        }
+        private void ConfigureRoutes(IRouteBuilder routeBuilder)
+        {
+            // All this url go to the home control index method
+            // https://localhost:44328/home/index/1
+            // https://localhost:44328/home/index
+            // https://localhost:44328/home
+            // https://localhost:44328/
+            routeBuilder.MapRoute("Default", "{controller=Home}/{action=index}/{id?}"); // id is optional
         }
     }
 }
@@ -84,3 +96,5 @@ namespace OdeToFood
     });
     app.UseWelcomePage(new WelcomePageOptions { Path = "/wp" });     
 */
+
+    
