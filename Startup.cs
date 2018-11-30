@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OdeToFood.Services;
 
 namespace OdeToFood
 {
@@ -18,7 +19,9 @@ namespace OdeToFood
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IGreeter, Greeter>(); // once instance for the all app
+            services.AddSingleton<IGreeter, Greeter>(); // Once instance for the all app
+            services.AddScoped<IRestaurantData, InMemoryRestaurantData>(); // Once instance for the all app
+
             //services.AddTransient // allocated each time requested
             //services.AddScoped // For every http request
             services.AddMvc();
