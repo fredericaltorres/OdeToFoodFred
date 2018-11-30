@@ -38,7 +38,7 @@ namespace OdeToFood
             }
             else
             {
-                // app.UseExceptionHandler();
+                // app.UseExceptionHandler();  
             }
 
             // Use static file located in folde wwww and set up default page
