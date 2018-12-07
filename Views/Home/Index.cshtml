@@ -13,8 +13,20 @@
         <tr>
             <td>@restaurant.Id</td>
             <td>@restaurant.Name</td>
+            <td>
+
+                <!-- 3 ways to generate the link -->
+
+                <a href="/home/details/@restaurant.Id">Details</a>
+                @Html.ActionLink("Details 2", "Details", "Home", new {id=restaurant.Id })
+                <a asp-action="Details" asp-route-id="@restaurant.Id">Details 3</a>
+            </td>
         </tr>
         }
     </table>
+
+    <!-- Call Create action on the current controller -->
+    <a asp-action="Create">Add Restaurant</a>
+
 </body>
 </html>

@@ -1,0 +1,14 @@
+﻿@using OdeToFood.Models
+@model OdeToFood.Models.Restaurant
+
+<h1>Create</h1>
+
+<form method="post">
+    <!-- Post back to same url-->
+    @*<input type="text" name="Name" value="" />*@ <!-- name value must match C# property -->
+
+    <input asp-for="Name" /> @*Use new asp.net core helper*@
+    <select asp-for="Cuisine" asp-items="@Html.GetEnumSelectList<CuisineType>()"></select>
+
+    <input type="submit" name="save" value="Save" />
+</form>

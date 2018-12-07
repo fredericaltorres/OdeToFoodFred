@@ -41,7 +41,19 @@ namespace OdeToFood.Controllers
         public IActionResult Details(int id)
         {
             var model = this._restaurantData.Get(id);
+            if(model == null)
+            {
+                // return View("NotFound");
+
+                // Redirect to the list of restaurant in case the id is not found
+                return base.RedirectToAction(nameof(index));
+            }
             return View(model);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }
