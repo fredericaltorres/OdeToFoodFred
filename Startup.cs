@@ -20,7 +20,9 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>(); // Once instance for the all app
-            services.AddScoped<IRestaurantData, InMemoryRestaurantData>(); // Once instance for the all app
+
+            // services.AddScoped<IRestaurantData, InMemoryRestaurantData>(); // Once instance for the all app
+            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>(); // Only work because we have an in memory database
 
             //services.AddTransient // allocated each time requested
             //services.AddScoped // For every http request
