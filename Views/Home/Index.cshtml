@@ -1,15 +1,17 @@
 ﻿@model OdeToFood.ViewModels.HomeIndexViewModel
+@{
+    ViewBag.Title = "Home Page"; // Execute before the layout view    
+    // Override the default layout
+    // this.Layout = "~/views/shared/_layout.cshtml";
+}
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <h1>Hello </h1>
-    <div>@Model.CurrentMessage </div>
+<h1>Hello </h1>
+<h2>All Restaurants</h2>
+<hr />
 
-    <table>
-        @foreach(var restaurant in Model.Restaurants) {
+<table>
+    @foreach (var restaurant in Model.Restaurants)
+    {
         <tr>
             <td>@restaurant.Id</td>
             <td>@restaurant.Name</td>
@@ -17,16 +19,20 @@
 
                 <!-- 3 ways to generate the link -->
 
-                <a href="/home/details/@restaurant.Id">Details</a>
-                @Html.ActionLink("Details 2", "Details", "Home", new {id=restaurant.Id })
-                <a asp-action="Details" asp-route-id="@restaurant.Id">Details 3</a>
+                @*
+                    <a href="/home/details/@restaurant.Id">Details</a>
+                    @Html.ActionLink("Details 2", "Details", "Home", new { id = restaurant.Id })
+                *@
+
+                <a asp-action="Details" asp-route-id="@restaurant.Id">Details</a>
             </td>
         </tr>
-        }
-    </table>
+    }
+</table>
 
-    <!-- Call Create action on the current controller -->
-    <a asp-action="Create">Add Restaurant</a>
+<!-- Call Create action on the current controller -->
+<a asp-action="Create">Add Restaurant</a>
 
-</body>
-</html>
+@section footer {
+    CurrentMessage: @Model.CurrentMessage
+}

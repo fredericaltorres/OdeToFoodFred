@@ -1,0 +1,12 @@
+﻿@page
+
+@inject IGreeter Greeter
+
+<div>hello !</div>
+<div>
+    Year:@DateTime.Now.Year
+</div>
+<hr />
+<div>
+    GetMessageOfTheDay: @Greeter.GetMessageOfTheDay()
+</div>

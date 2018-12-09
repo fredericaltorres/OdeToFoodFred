@@ -58,17 +58,25 @@ namespace OdeToFood.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] // <<< Important
         public IActionResult Create(RestaurantEditModel model)
         {
-            var newRestaurant = new Restaurant() {
-                Name = model.Name,
-                Cuisine = model.Cuisine
-            };
-            newRestaurant = _restaurantData.Add(newRestaurant);
+            if(this.ModelState.IsValid)
+            {
+                var newRestaurant = new Restaurant() {
+                    Name = model.Name,
+                    Cuisine = model.Cuisine
+                };
+                newRestaurant = _restaurantData.Add(newRestaurant);
 
-            // RedirectToAction instead of simply returning a View() to force
-            // an HTTP GET after the HTTP post, to avoid a user refresh on the post
-            return RedirectToAction(nameof(Details), new { id=newRestaurant.Id } );
+                // RedirectToAction instead of simply returning a View() we force
+                // an HTTP GET after the HTTP post, to avoid a user refresh on the post
+                return RedirectToAction(nameof(Details), new { id=newRestaurant.Id } );
+            }
+            else
+            {
+                return View(); // Display validation error
+            }
         }
     }
 }

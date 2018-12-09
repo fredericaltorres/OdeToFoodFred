@@ -1,12 +1,25 @@
 ﻿@using OdeToFood.Models
 @model OdeToFood.Models.Restaurant
 
+@{
+    ViewBag.Title = "Create"; // Execute before the layout view
+}
+
 <h1>Create</h1>
 
-<form method="post"> @*Post back to same url*@
+<form method="post">
+    @*Post back to same url*@
 
-    <input asp-for="Name" /> @*Use new asp.net core helper*@
-    <select asp-for="Cuisine" asp-items="@Html.GetEnumSelectList<CuisineType>()"></select>
+    <div>
+        <label asp-for="Name"></label>   @* << Use new asp.net core helper*@
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Cuisine"></label>
+        <select asp-for="Cuisine" asp-items="@Html.GetEnumSelectList<CuisineType>()"></select>
+        <span asp-validation-for="Cuisine"></span>
+    </div>
 
     <input type="submit" name="save" value="Save" />
 </form>

@@ -6,15 +6,27 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+
+using OdeToFood.Data;
 using OdeToFood.Services;
+
 
 namespace OdeToFood
 {
     public class Startup
     {
+        IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)   // << Dependency injection)
+        {
+            this._configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -22,7 +34,14 @@ namespace OdeToFood
             services.AddSingleton<IGreeter, Greeter>(); // Once instance for the all app
 
             // services.AddScoped<IRestaurantData, InMemoryRestaurantData>(); // Once instance for the all app
-            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>(); // Only work because we have an in memory database
+            // services.AddSingleton<IRestaurantData, InMemoryRestaurantData>(); // Only work because we have an in memory database
+
+            // Configure Entity Framework
+            // DbContext is not thread safe so create an instance for each http call
+            services.AddDbContext<OdeToFoodDbContext>( options =>
+                options.UseSqlServer(_configuration.GetConnectionString("OdeToFoodConnectionString"))
+            );
+            services.AddScoped<IRestaurantData, SqlRestaurantData>(); // Only work because we have an in memory database
 
             //services.AddTransient // allocated each time requested
             //services.AddScoped // For every http request
