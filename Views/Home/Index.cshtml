@@ -1,14 +1,22 @@
 ﻿@model OdeToFood.ViewModels.HomeIndexViewModel
 @{
-    ViewBag.Title = "Home Page"; // Execute before the layout view    
-    // Override the default layout
-    // this.Layout = "~/views/shared/_layout.cshtml";
+    ViewBag.Title = "Home Page"; // Execute before the layout view
+                                 // Override the default layout
+                                 // this.Layout = "~/views/shared/_layout.cshtml";
 }
 
 <h1>Hello </h1>
 <h2>All Restaurants</h2>
 <hr />
 
+@foreach (var restaurant in Model.Restaurants)
+{
+    @Html.Partial("_Summary", restaurant)
+}
+
+<hr />
+
+@*
 <table>
     @foreach (var restaurant in Model.Restaurants)
     {
@@ -18,11 +26,9 @@
             <td>
 
                 <!-- 3 ways to generate the link -->
-
-                @*
+                
                     <a href="/home/details/@restaurant.Id">Details</a>
                     @Html.ActionLink("Details 2", "Details", "Home", new { id = restaurant.Id })
-                *@
 
                 <a asp-action="Details" asp-route-id="@restaurant.Id">Details</a>
                 <a asp-page="/Restaurants/Edit" asp-route-id="@restaurant.Id">Edit</a>
@@ -30,9 +36,9 @@
         </tr>
     }
 </table>
-
-<!-- Call Create action on the current controller -->
-<a asp-action="Create">Add Restaurant</a>
+*@
+    <!-- Call Create action on the current controller -->
+<div><a asp-action="Create">Add Restaurant</a></div>
 
 @section footer {
     CurrentMessage: @Model.CurrentMessage

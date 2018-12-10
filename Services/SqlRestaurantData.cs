@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using OdeToFood.Data;
 using OdeToFood.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace OdeToFood.Services
 {
@@ -32,6 +33,13 @@ namespace OdeToFood.Services
         {
             // Only work for small records
             return this._context.Restaurants.OrderBy(r => r.Name);
+        }
+
+        public Restaurant Update(Restaurant restaurant)
+        {
+            this._context.Attach(restaurant).State = EntityState.Modified;
+            this._context.SaveChanges();
+            return restaurant;
         }
     }
 }

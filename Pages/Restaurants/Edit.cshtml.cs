@@ -12,7 +12,9 @@ namespace OdeToFood.Pages.Restaurants
     public class EditModel : PageModel
     {
         IRestaurantData _restaurantData;
-        public Restaurant Restaurant;
+
+        [BindProperty]
+        public Restaurant Restaurant {get; set;}
 
         public EditModel(IRestaurantData restaurantData)
         {
@@ -24,6 +26,18 @@ namespace OdeToFood.Pages.Restaurants
             if(this.Restaurant == null)
                 return RedirectToAction("Index", "Home");  // Go back to home page because the restaurant id is invalid
             return Page(); // Same as View()
+        }
+        public IActionResult OnPost()
+        {
+            if(this.ModelState.IsValid)
+            {
+                this._restaurantData.Update(this.Restaurant);
+                return RedirectToAction("Details", "Home", new { id = this.Restaurant.Id });
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }
