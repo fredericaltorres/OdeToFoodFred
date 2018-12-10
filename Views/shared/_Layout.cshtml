@@ -9,12 +9,10 @@
         @RenderBody()
     </div>
     <hr />
-    <footer>
+    <footer>Footer<br />
+
         @RenderSection("footer", required: false)
+        @await Component.InvokeAsync("Greeter")
     </footer>
-    <hr />
-    <div>
-        Time:@DateTime.Now
-    </div>
 </body>
 </html>
